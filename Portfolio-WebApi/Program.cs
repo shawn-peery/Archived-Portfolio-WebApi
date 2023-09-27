@@ -35,15 +35,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseCors(builder =>
 {
-    builder.WithOrigins("http://127.0.0.1:8000").AllowAnyHeader().AllowAnyMethod();
-    builder.WithOrigins("http://localhost:8000").AllowAnyHeader().AllowAnyMethod();
+    builder.WithOrigins("https://127.0.0.1:8000").AllowAnyHeader().AllowAnyMethod();
+    builder.WithOrigins("https://localhost:8000").AllowAnyHeader().AllowAnyMethod();
 
 });
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(name: "default", pattern: "{controller=Hrome}/{action=Get}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "api/{controller=Home}/{action}");
 
 
 app.MapControllers();
