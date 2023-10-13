@@ -1,9 +1,42 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph;
+using Microsoft.OpenApi.Expressions;
+using Portfolio_WebApi.Models.ResponseModels;
+using Portfolio_WebApi.Models.TodoModels;
+using Portfolio_WebApi.Services;
 
-namespace Portfolio_WebApi.Controllers {
+namespace Portfolio_WebApi.Controllers
+{
     [ApiController]
-    [Route(("[controller]"))]
-    public class TodoController: ControllerBase {
+    public class TodoController : ControllerBase
+    {
+
+        private TodoService todoService;
+
+        public TodoController(TodoService todoService)
+        {
+            this.todoService = todoService;
+        }
+
+
+        [Authorize(Roles = Roles.ADMIN_ROLE)]
+        [HttpPost]
+        public ActionResult<ReturnModelWithMessageDto<ViewTodoDto>> CreateTodo(CreteTodoDto newTodo)
+        {
+            ActionResult<ReturnModelWithMessageDto<ViewTodoDto>> response;
+            try
+            {
+                response = todoService.CreateTodo(newTodo);
+            }
+            catch (BadHttpRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
+            return response;
+
+        }
 
     }
 }
