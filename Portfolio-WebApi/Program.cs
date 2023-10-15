@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Portfolio_WebApi.Models;
+using Portfolio_WebApi.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen();
 
 // Add EF Core DI
 builder.Services.AddDbContext<TodoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ToDoContext")));
+
+builder.Services.AddScoped<ITodoService, TodoService>();
 
 WebApplication app = builder.Build();
 

@@ -8,13 +8,13 @@ using Portfolio_WebApi.Services;
 
 namespace Portfolio_WebApi.Controllers
 {
-    [ApiController]
+    // [ApiController]
     public class TodoController : ControllerBase
     {
 
-        private TodoService todoService;
+        private ITodoService todoService;
 
-        public TodoController(TodoService todoService)
+        public TodoController(ITodoService todoService)
         {
             this.todoService = todoService;
         }
