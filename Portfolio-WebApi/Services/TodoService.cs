@@ -3,25 +3,32 @@ using Portfolio_WebApi.Models;
 using Portfolio_WebApi.Models.ResponseModels;
 using Portfolio_WebApi.Models.TodoModels;
 
-namespace Portfolio_WebApi.Services {
+namespace Portfolio_WebApi.Services
+{
 
-    public interface ITodoService{
-        ActionResult<ReturnModelWithMessageDto<ViewTodoDto>> CreateTodo(CreteTodoDto newTodo);
+    public interface ITodoService
+    {
+        ReturnModelWithMessageDto<ViewTodoDto> CreateTodo(CreateTodoDto newTodo);
     }
-    public class TodoService : ITodoService {
+    public class TodoService : ITodoService
+    {
 
         private TodoContext todoContext;
 
-        public TodoService(TodoContext todoContext) {
+        public TodoService(TodoContext todoContext)
+        {
             this.todoContext = todoContext;
         }
-        public ActionResult<ReturnModelWithMessageDto<ViewTodoDto>> CreateTodo(CreteTodoDto createTodoDto) {
+        public ReturnModelWithMessageDto<ViewTodoDto> CreateTodo(CreateTodoDto createTodoDto)
+        {
 
-            if (createTodoDto.Title == "") {
+            if (createTodoDto.Title == "")
+            {
                 throw new BadHttpRequestException("Please provide a title.");
-            } 
+            }
 
-            if (createTodoDto.Description == "") {
+            if (createTodoDto.Description == "")
+            {
                 throw new BadHttpRequestException("Please provide a description.");
             }
 
@@ -33,7 +40,7 @@ namespace Portfolio_WebApi.Services {
 
             ViewTodoDto viewTodoDto = new ViewTodoDto(newTodo);
 
-            ReturnModelWithMessageDto<ViewTodoDto> returnModelDto = new ("Successfully created new TodoDto!", viewTodoDto);
+            ReturnModelWithMessageDto<ViewTodoDto> returnModelDto = new("Successfully created new TodoDto!", viewTodoDto);
 
             return returnModelDto;
 

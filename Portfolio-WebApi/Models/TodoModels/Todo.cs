@@ -6,9 +6,6 @@ namespace Portfolio_WebApi.Models
 {
     public class Todo
     {
-
-
-
         public int Id { get; set; }
 
 
@@ -18,18 +15,12 @@ namespace Portfolio_WebApi.Models
         [Required(ErrorMessage = "Please enter a description.")]
         public string Description { get; set; } = string.Empty;
 
-
-        [ValidateNever]
-        public string User  { get; set; } = string.Empty!;
-
-
-        [ValidateNever]
-        public Status Status { get; set; } = null!;
-
-        public Todo() {
+        public Todo()
+        {
 
         }
-        public Todo(CreteTodoDto createTodoDto) {
+        public Todo(CreateTodoDto createTodoDto)
+        {
 
             this.Title = createTodoDto.Title;
             this.Description = createTodoDto.Description;

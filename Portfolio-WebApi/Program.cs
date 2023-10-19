@@ -51,7 +51,8 @@ app.UseCors(builder =>
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(name: "default", pattern: "api/{controller=Home}/{action}");
+// Seems like I can't have this with [ApiController]
+// app.MapControllerRoute(name: "default", pattern: "api/{controller=Home}/{action}");
 
 
 app.MapControllers();

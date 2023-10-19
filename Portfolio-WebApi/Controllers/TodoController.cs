@@ -5,10 +5,12 @@ using Microsoft.OpenApi.Expressions;
 using Portfolio_WebApi.Models.ResponseModels;
 using Portfolio_WebApi.Models.TodoModels;
 using Portfolio_WebApi.Services;
+using Portfolio_WebApi.Utils;
 
 namespace Portfolio_WebApi.Controllers
 {
-    // [ApiController]
+    [ApiController]
+    [Route(RouteUtil.STANDARD_ROUTE)]
     public class TodoController : ControllerBase
     {
 
@@ -22,21 +24,21 @@ namespace Portfolio_WebApi.Controllers
 
         [Authorize(Roles = Roles.ADMIN_ROLE)]
         [HttpPost]
-        public ActionResult<ReturnModelWithMessageDto<ViewTodoDto>> CreateTodo(CreteTodoDto newTodo)
+        public ReturnModelWithMessageDto<ViewTodoDto> CreateTodo(CreateTodoDto newTodo)
         {
-            ActionResult<ReturnModelWithMessageDto<ViewTodoDto>> response;
+            ReturnModelWithMessageDto<ViewTodoDto> response;
             try
             {
                 response = todoService.CreateTodo(newTodo);
             }
             catch (BadHttpRequestException exception)
             {
-                return BadRequest(exception.Message);
+                return new("", new());
+                // return BadRequest(exception.Message);
             }
 
             return response;
 
         }
-
     }
 }
