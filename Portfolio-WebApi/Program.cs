@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using Portfolio_WebApi.Models;
+using Portfolio_WebApi.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add EF Core DI
+builder.Services.AddDbContext<TodoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ToDoContext")));
+
+builder.Services.AddScoped<ITodoService, TodoService>();
 
 WebApplication app = builder.Build();
 
@@ -43,7 +51,8 @@ app.UseCors(builder =>
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(name: "default", pattern: "api/{controller=Home}/{action}");
+// Seems like I can't have this with [ApiController]
+// app.MapControllerRoute(name: "default", pattern: "api/{controller=Home}/{action}");
 
 
 app.MapControllers();
