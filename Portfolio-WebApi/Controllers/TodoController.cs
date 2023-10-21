@@ -26,6 +26,12 @@ namespace Portfolio_WebApi.Controllers
         [HttpPost]
         public ReturnModelWithMessageDto<ViewTodoDto> CreateTodo(CreateTodoDto newTodo)
         {
+
+            // Access the Azure Object ID from the User's claims
+            string? azureObjectId = User.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier")?.Value;
+
+
+
             ReturnModelWithMessageDto<ViewTodoDto> response;
             try
             {
